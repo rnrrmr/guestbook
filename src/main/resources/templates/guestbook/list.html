@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <h1>GuestBook List Page</h1>
+        <!-- 리스트 내용은 테이블 형태로 들어오게 됨 -->
+    </th:block>
+</th:block>
+</html>
