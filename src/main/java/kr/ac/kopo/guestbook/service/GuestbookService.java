@@ -1,5 +1,6 @@
 package kr.ac.kopo.guestbook.service;
 
+import com.querydsl.core.BooleanBuilder;
 import kr.ac.kopo.guestbook.dto.GuestbookDTO;
 import kr.ac.kopo.guestbook.dto.PageRequestDTO;
 import kr.ac.kopo.guestbook.dto.PageResultDTO;
@@ -15,6 +16,14 @@ public interface GuestbookService {
     // 글 내용 조회
     GuestbookDTO read(Long gno);
 
+    // 글 수정
+    void modify(GuestbookDTO dto);  // gno, title, content를 사용해서 수정
+
+    // 글 삭제
+    void remove(Long gno);  // 추상 메소드 선언, gno만 있어도 삭제가능
+
+    // 검색
+    BooleanBuilder getSearch(PageRequestDTO requestDTO);
 
     default Guestbook dtoToEntity(GuestbookDTO dto){
         Guestbook guestbookEntity = Guestbook.builder()

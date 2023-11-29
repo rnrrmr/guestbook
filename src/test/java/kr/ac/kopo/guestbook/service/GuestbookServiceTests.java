@@ -46,4 +46,28 @@ public class GuestbookServiceTests {
         // 기본자료형  forEach 객체는 enhanced for문
         resultDTO.getPageList().forEach(i -> System.out.print(i + " "));
     }
+
+    @Test
+    public void testSearch(){
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(1)
+                .size(10)
+                .type("tc")
+                .keyword("3")
+                .build();
+
+        PageResultDTO<GuestbookDTO, Guestbook> resultDTO = service.getList(pageRequestDTO);
+
+        System.out.println("prev: " + resultDTO.isPrev());
+        System.out.println("next: " + resultDTO.isNext());
+        System.out.println("total: " + resultDTO.getTotalPage());
+
+        System.out.println("***********************************");
+        for (GuestbookDTO guestbookDTO: resultDTO.getDtoList()){
+            System.out.println(guestbookDTO);
+        }
+
+        System.out.println("***********************************");
+        resultDTO.getPageList().forEach(i->System.out.println(i));
+    }
 }

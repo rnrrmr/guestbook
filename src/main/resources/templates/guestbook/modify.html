@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="http://code.jquery.com/jquery-3.7.0.js"></script>
+<!-- 글 수정 페이지 -->
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <h1 class="mt-4">Guestbook Modify Page</h1>
+        <form th:method="post" th:action="@{/guestbook/modify}">
+            <input type="hidden" name="page" th:value="${requestDTO.page}">
+            <div class="form-group">
+                <label>Gno</label>
+                <input type="text" class="form-control" name="gno" th:value="${dto.gno}" readonly>
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" name="title" th:value="${dto.title}" >
+            </div>
+            <div class="form-group">
+                <label>Content</label>
+                <textarea rows="5" class="form-control" name="content" >[[${dto.content}]]</textarea>
+            </div>
+            <div class="form-group">
+                <label>Writer</label>
+                <input type="text" class="form-control" name="writer" th:value="${dto.writer}" readonly>
+            </div>
+            <div class="form-group">
+                <label>RegDate</label>
+                <input type="text" class="form-control" name="regDate" th:value="${dto.regDate}" readonly>
+            </div>
+            <div class="form-group">
+                <label>ModDate</label>
+                <input type="text" class="form-control" name="modDate" th:value="${dto.modDate}" readonly>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary modifyBtn">Modify</button>
+                <button type="button" class="btn btn-info listBtn">List</button>
+                <button type="button" class="btn btn-danger removeBtn">Remove</button>
+            </div>
+        </form>
+    </th:block>
+</th:block>
+<script th:inline="javascript">
+    var actionForm = $("form");
+    $(".removeBtn").click(function (){
+        actionForm
+            .attr("action", "/guestbook/remove")
+            .attr("method", "post")
+        actionForm.submit();
+    });
+
+    $(".modifyBtn").click(function (){
+        actionForm
+            .attr("action", "/guestbook/modify")
+            .attr("method", "post")
+        actionForm.submit();
+    });
+
+    $(".listBtn").click(function (){
+        var pageInfo = $("input[name='page']");
+        actionForm.empty();  //Form 내용을 지우기
+        actionForm.append(pageInfo); // 목록페이지 이동할때 필요한 정보추가
+        actionForm
+            .attr("action", "/guestbook/list")
+            .attr("method", "get")
+        actionForm.submit();
+    });
+</script>
+</html>
